@@ -1,0 +1,138 @@
+01] Footprinting the web infrastructure
+02] Analyze Web Applications
+03] Bypass client side controls
+04] Attack authentication mechanism
+05] Attack authorization schemes
+06] Attack access controls
+07] Attack session management mechanism
+08] Perform injection attacks
+09] Attack app logic flaws
+10] Attack shared environments
+11] Attack DB connectivity
+12] Attack web app client
+13] Attack Web Services
+
+01] Footprinting the web infrastructure
+> server discovery
+		whois lookup
+				https://www.netcraft.com/
+				https://whois.domaintools.com/
+				http://sabsoft.com/
+		DNS interrogation
+				https://www.dnsstuff.com/freetools
+				https://network-tools.com/
+				https://centralops.net/co/
+				DNS Recon
+		Port Scanning
+				https://www.advanced-port-scanner.com/
+				https://netscantools.com/
+				Hping and Nmap
+> service discovery
+		scan and identify common ports using tools like nmap, netscantools pro, sandcat browser
+> server identification
+		Server Identification and Banner Grabbing
+				telnet domain.com/IP port_no.
+				s_client -host domain.com/IP -port 443
+		Detecting web app firewalls and proxies
+				Detect Proxies
+				Detecting Web App Firewalls
+						check cookies in response headers, as most of WAFs add their own cookie in response headers
+						# wafw00f domain.com
+
+> hidden content discovery
+		Web Spider Crawling - OWASP ZAP, Burp Suite, WebScarab and Mozenda Web Agent Builder for webspidering and crawling
+		Attacker Directed Spidering - OWASP ZAP
+> load balancers detection
+		dig domain.com
+		lbd domain.com
+		halberd domain.com [available from github]
+
+02] Analyze Web Applications
+Identify entry points for user input
+		- Examine URL, HTTP header, query string parameters, POST Data and cookies
+		- User Agent, referer, accept, accept language, host headers
+		- URL encoding techniques used, and encryption measures implemented
+		- Tools: Burp Suite, OWASP ZAP, httprint, WebScarab
+Identify server side technologies
+		- detailed server fingerprinting
+		- HTTP headers and HTML source code
+		- Examine URLS for file extensions, directories, and other identification info
+		- examine error page messages
+		- Examine session tokens: JSESSIONID - java, ASPSESSIONID - IIS Server, ASP.NET_SessionID - ASP.NET, PHPSESSID - PHP
+		- Tools: httprint and whatweb
+		- whatweb -v www.domain.com
+		- httprint -h www.domain.com -s /usr/share/httprint/signatures.txt
+Identify server side functionality
+		- Examine source code and URLS to make educated guess about the internal structure and functionality of web app
+		- Tools: wget, Teleport pro, blackwidow
+Identify files and directories
+		- Tools: Gobuster, nmap nse script http-enum
+		- apt-get install gobuster
+		- gobuster dir -u https://www.domain.com -w /usr/share/wordlists/dirb/common.txt
+		- nmap -sV --script=http-enum www.domain.com
+Identify web applications vulnerabilities
+		- vega, wpscan, arachni, uniscan
+Map the attack surface
+		- Table: Information, Attack
+		
+03] Bypass client side controls
+Attack Hidden Form Fields
+		Identify hidden fields, and manipulate the tags to exploit
+Attack Browser Extensions
+		Attempt to intercept the traffic from browser extensions - Burp suite
+		Decompile the browser extensions to capture user data
+				- Attempt to decompile the components bytecode 
+Perform Source Code Review
+		client side input validation
+		employed obfuscation or encrypted techniques
+		modifiable components with hidden client side functionality
+		references to server side functionality
+Evade XSS Filters
+		Inject unusual characters into HTML code
+			Encoding characters
+			Embedding whitespaces
+			manipulating tags
+			
+04] Attack authentication mechanism
+Username enumeration
+	Verbose failure messages
+	Predicatable usernames
+Cookie Exploitation
+	Cookie poisoning, sniffing and relay
+Password Attacks
+	Password functionality exploits
+		Password changing
+		Password recovery
+		Remember Me Password exploit
+	Password guessing
+		Create a list of all possible passwords
+		Tool: Ditionary Maker
+		Password Guessing tools: THC Hydra, BurpSuite, L0phtCrack, ophcrack, rainbowcrack
+	Bruteforce
+	Dictionary attack
+	Attack Password reset mechanism
+		How to perform password reset poisoning attack
+Session Attacks
+	Session Prediction
+	Session Bruteforcing
+	Session Poisoning
+Bypass Authentication
+	Bypass SAML based SSO
+		SAML messages are encoded using Base64 encoding and can be easily decrypted to extract the content of messages.
+		Tools: SAML Raider
+
+Design and implementation flaws in authentication mechanism
+
+05] Attack authorization schemes
+- Access the application as a low privileged user,
+- gradually access the application as high privileged user
+- Manipulate the http headers from a low privileged account to move to a higher privileged account.
+Uniform Resource Identifier
+POST Data
+HTTP Request tampering
+	Query string tampering
+	HTTP headers
+		If the app makes use of a referer header for making access control decisions, try to modify it to access protected app functionalities.
+Parameter Tampering
+HTTP Headers
+Hidden tags
