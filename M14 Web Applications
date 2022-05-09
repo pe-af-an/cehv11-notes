@@ -92,7 +92,9 @@ Evade XSS Filters
 			Encoding characters
 			Embedding whitespaces
 			manipulating tags
-			
+https://cheatsheetseries.owasp.org/cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.html
+https://www.xssposed.org/
+
 04] Attack authentication mechanism
 Username enumeration
 	Verbose failure messages
@@ -136,3 +138,239 @@ HTTP Request tampering
 Parameter Tampering
 HTTP Headers
 Hidden tags
+
+06] Attack Access Controls
+Access control attack methods
+- attack with different user accounts
+- attack with multistage processes
+- attack static resources
+- attack direct access to methods
+- attack restrictions on http methods
+
+Exploiting insecure access controls
+a] Parameter based access control
+b] Referrer based access control
+c] location-based access control
+
+07] Attack Session Management
+
+08] Perform Injection Attacks
+a] Web scripts injection
+b] OS Commands injection
+c] SMTP Injection
+d] SQL Injection
+e] LDAP injection
+f] XPath Injection
+g] Buffer Overflow
+h] File Injection
+
+09] Attack App Logic Flow
+
+10] Attack Shared Environments
+	Attacks on the access mechanism
+		Check whether the application has any misconfiguration
+		Check for access level exploits
+		Check for unpatched vulnerabilties
+	Attacks between applications
+		Check to see if there are vulnerabilities in one application that can be used to exploit the clients/applications on same server/service.
+
+Ex: 3rd Party Service Providers
+	- Used by multiple clients to manage services/clients (For example shared web hosting)
+
+#!/usr/bin/perl
+use strict;
+use CGI qw(:standard excapeHTML);
+print header, start_html("");
+if (param()){my $command = param("cmd");
+$command=`$command`;
+print "$command\n";}
+else {print start_form(); textfield("command");}
+print end_html;
+
+11] Attack DB Connectivity
+Web Applications use -> DB connection strings connect-> DB Engines
+DB connectivity attacks -> Exploit -> the way WEB APPS connect to DB Engines instead of abusing DB queries
+
+TYPES OF DB CONNECTIVITY ATTACKS
+
+01] Connection string injection
+02] Connection string parameter pollution(CSPP) attacks
+03] Connection pool DOS
+
+12] Attack Web App Client
+a] Cross site scripting
+b] http header injection
+c] Request forgery attack
+d] Privacy attacks
+e] redirection attacks
+f] frame injection
+h] session fixation
+i] activeX attacks
+
+13] Attack Web Services
+
+##########################################
+##### WebAPI, WebHooks and WebShells #####
+##########################################
+What is the use of web APIs?
+Give examples where web APIs are used?
+What is a web API?
+Why do we need an API?
+
+Name and explain the different types of APIs?
+- SOAP
+- REST
+- RESTful
+- XML-RPC
+- JSON-RPC
+
+What are webhooks?
+What is the function of a webhook?
+How are webhooks enrolled?
+What are webhooks also called? Reverse APIs
+Give an example of where webhook is used? notify me button on an online portal.
+
+What is a web shell? malicious script
+What languages are used to create a web shell? server-side languages _PHP, ASP, PERL, RUBY, and Python)
+How does a web shell help an attacker? gain remote access or remote administration capabilities
+How does the attacker inject the script into the target? RFI, LFI, Exposition of administration interfaces, SQL injections, XSS
+Name the tools used for web shells?
+- WSO PHP web shell, b374k, c99, R57 and Pouya ASP web shell(GitHub), china chopper(fireeye.com)
+
+How do attackers gain backdoor access using web shells?
+- attackers use tools like weevely
+- It helps in performing admin tasks, maintaining persistence, and spreading backdoors across the target network.
+# weevely http://IP:PORT/dvwa/hackable/uploads/shell.php
+
+How to prevent the installation of web shells?
+Name the tools used to detect web shell?
+- web shell detector, FireEye network security, NeoPI, antishell web shell hunter, Astra
+
+What is secure API architecture?
+
+API security risks and solutions
+Best practices for API security
+Best practices for securing webhooks
+
+########################
+##### Web Security #####
+########################
+Name and explain the different types of web application security testing?
+What kind of tools are used for manual web application security testing? secapps, selenium, apache jmeter
+What kind of tools are used for automated application security testing? ranorex studio, testcomplete, lapwork
+What kind of tools are used for static application security testing(SAST) white box testing approach?
+	- coverty application security testing, appknox, attackflow
+What kind of tools are used for dynamic application security testing(DAST) black-box testing approach?
+	- Netsparker, acunetix, hcl appscan
+
+What is web application fuzz testing? Blackbox testing method
+What are fuzz testing tools called? Fuzzers
+Fuzz testing is done what kind of attacks? buffer overflow, DOS, XSS, SQLi
+What are the steps involved in fuzz testing?
+- identify the target system
+- identify inputs
+- generate fuzzed data
+- execute the test using fuzz data
+- monitor system behavior
+- log defects
+Name and explain the different types of fuzz testing strategies?
+-1] Mutation Based - current data sample -> new test data -> mutates to create further new test data(random data)
+-2] Generation Based - new data generated from scratch, amount of data to be generated predefined based on testing model
+-3] Protocol-based - protocol fuzzer sends forged packets to the target application that is being tested. Requires detailed knowledge of the protocol being tested.
+
+Scenario
+Attack Script -> Fuzzer Tool -> script turned into requests -> HTTP Client -> Request/response -> TARGET
+Responses are logged for further manual inspection
+
+Name the tools used in fuzzing? WSFuzzer, WebScarab, BurpSuite, HCL AppScan, Peach Fuzzer
+
+Why perform source code review?
+How to perform source code review? Manual/Automated tools
+Manual code review? Develop -> Code Review -> Feedback -> Develop | this cycle continues
+Automated code review?
+-1] Push code
+-2] Run code review
+-3] notify modify errors
+-4] if ok, build
+-5] if ok, deploy
+
+What is an encoding scheme? What is it used for?
+- To safely handle unusual characters and binary data in the way you(developer) intends
+Name and explain the different kinds of encoding schemes?
+- URL encoding - converting URL into valid ascii format
+- HTML Encoding - represent unusual chars so that they can be accurately represented in HTML document.
+- Unicode encoding (16 bit Unicode encoding | UTF-8)
+- Base64 Encoding
+- Hex Coding
+
+What do you mean by application whitelisting?
+What do you mean by application blacklisting?
+What do you mean by URL whitelisting? Users can access URLs except those in the blacklist
+What do you mean by URL blacklisting? Prevents the user from executing URLs mentioned in the blacklist
+Give the steps involved in URL whitelisting?
+- Allow access to URLs except for the blocked ones
+- Block access to all URLs except permitted ones
+- Define exceptions to very restrictive blacklists
+- Allow the browser to open applications
+Give the steps involved in URL blacklisting
+- Allow access to all URLs except the blocked ones
+- Block access to all URLs except permitted ones
+- Define exceptions to very restrictive blacklists
+- Allow the browser to open applications
+
+Name the application whitelisting and blacklisting tools?
+appility.io, AutoShun, cisco umbrella, alexa top sites(aws.amazon.com), APT groups and operations(docs.google.com), nordvpn
+
+How to defend against injection attacks?
+-1] SQLi
+-2] Command injection flaws
+-3] LDAP injection flaws
+-4] File Injection Attacks
+-5] server-side js injection
+-6] server-side include injection
+-7] server-side template injection
+-8] Logi
+
+Name and explain web attack countermeasures?
+- session management
+- sensitive data exposure
+- xml external entity
+- broken access control
+- security misconfiguration
+- XSS attacks
+- insecure deserialization
+- using components with known vulnerabilities
+- insufficient logging and monitoring
+- directory traversal
+- unvalidated redirects and forwards
+- watering hole attack
+- cross-site request forgery
+- cookie/session poisoning
+- web service attack
+- clickjacking
+- jsp hijacking
+- username enumeration
+- attack on password reset mechanisms
+
+How to defend against web application attacks?
+REMEMBER THE DIAGRAM
+
+Explain how you can use RASP for protecting web servers?
+Runtime application self protection
+What are the benefits of RASP?
+- visibility
+- collaboration and devops
+- penetration testing
+- incident response
+
+What is a bug bounty program?
+
+Name different types of web application testing tools?
+Acunetix WVS, N-Stalker Web App Security
+Browser exploitation framework
+MSF, powersploit, watcher web security tool, netsparker, arachni
+
+Name different types of web application firewalls?
+dotDefender, serverdefender vp, HCL appscan standard, radwares appwall, qualys waf, Barracuda waf
+
+https://workflowy.com/s/cehv11-notes-theory/tLCqiT0tt8kI1ow0
